@@ -6,68 +6,9 @@
 <script type="text/javascript" src="js/jquery-1.8.2.js" ></script>
 <script type="text/javascript" src="js/jquery.imagemapster.js"></script>
 <script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
-<link type="stylesheet" href="css/bonemets.css"></link>
+<link rel="stylesheet" type="text/css" href="css/osteomapper.css"></link>
 
-<style type="text/css">
-.error {
-	color: red;
-}
-body{
-	font-family: Arial;
-}
-.accent {
-	z-index: 2;
-	position: relative;
-	left: 80%;
-	right: 0px;
-	top: 0px;
-	
-}
-.banner{
-	background-image: url('img/bannerbg.jpg');
-	background-size: cover;
-	padding: 3px;
-	position: absolute;
-	left: 0px;
-	width: 100%;
-	z-index: 1;
-	top: 0px;
-}
-	
-.content {
-	position: absolute;
-	left: 0px;
-	top: 100px;
-	padding: 5px;
-}
 
-#details {
-	background-color: lightgrey;
-	padding: 10px;
-	border: 1px solid black;
-}
-
-#addForm {
-	background-color: #0F81D3;
-	padding: 10px;
-	border: 1px solid grey;
-}
-
-.popup {
-	z-index: 3;	
-	background-color: white;
-}
-
-.close {
-	float: right;
-	padding-right: 5px;
-}
-
-.clear {
-	clear: both;
-	}
-
-</style>
 </head>
 <body>
 <div class="banner">
@@ -134,8 +75,9 @@ function highlight_locations(id){
 	$(id).mapster('set', true, locations);
 }
 
-var onSuccess = function(data){
-	console.log(data);
+var onSuccess = function(data){    
+    //alert('success');
+	//console.log(data);
 	dataTypes = '';
 	dataTypesMap = {};
 	locations = '';
@@ -147,6 +89,7 @@ var onSuccess = function(data){
 		return;
 	}
 	var patientsDiv = $("#patients").append(data.Firstname + " " + data.Lastname + "<br/>");
+	
 	$.each(data.Fields, function(index, field){
 		
 		$("#patients").append("Date: " + new Date(parseInt(field.TreatmentDate.slice(6, -2))) + "<br/>");
@@ -163,7 +106,7 @@ var onSuccess = function(data){
 		});
 	});
 	
-	
+	//alert('pre image map');
 
 	
 	$("#skeletonImageMap").css('display', 'block');
@@ -206,18 +149,20 @@ var onSuccess = function(data){
 		var selector = 'area[data-key="'+key+'"]';
 		$(selector).mapster('set', true, selectedAreaOptions); //fixme: this does not select the area
 	});
+	//   alert('end');
 }
 
 var onError = function(response, textstatus, errorthrown){
-	console.log(response);
-	console.log(textstatus);
-	console.log(errorthrown);
+    //alert('error');
+	//console.log(response);
+	//console.log(textstatus);
+	//console.log(errorthrown);
 	$("#error").append(error.statusText);
 }
 
 function patientSearch(){
 	var mrn = $("#mrn").val();
-	var url = "/BoneMets/patients";
+	var url = "/OsteoMapper/patients";
 	//var url = "http://winhacker:100/BoneMets/GetPatient";
 	var type = "json";
 	var data = { mrn: mrn };

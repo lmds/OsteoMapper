@@ -1,0 +1,57 @@
+.error {
+    color: red;
+}
+body{
+    font-family: Arial;
+}
+.accent {
+    z-index: 2;
+    position: relative;
+    left: 80%;
+    right: 0px;
+    top: 0px;
+    
+}
+.banner{
+    background-image: url('../img/bannerbg.jpg');
+    background-size: cover;
+    padding: 3px;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    z-index: 1;
+    top: 0px;
+}
+    
+.content {
+    position: absolute;
+    left: 0px;
+    top: 100px;
+    padding: 5px;
+}
+
+#details {
+    background-color: lightgrey;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#addForm {
+    background-color: #0F81D3;
+    padding: 10px;
+    border: 1px solid grey;
+}
+
+.popup {
+    z-index: 3; 
+    background-color: white;
+}
+
+.close {
+    float: right;
+    padding-right: 5px;
+}
+
+.clear {
+    clear: both;
+    }
