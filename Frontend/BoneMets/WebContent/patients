@@ -1,0 +1,25 @@
+{"MRN":"038890",
+"Firstname":"John",
+"Lastname":"Smith",
+"Fields":[
+	{"AffectedRegions":
+		[
+			{"Location":"C1","dose":50,"type":"spine"},
+			{"Location":"T1","dose":84,"type":"spine"}
+		],
+	"Fractions":20,
+	"TreatmentDate":"\/Date(1316253320000)\/",
+	"TreatmentFacility":"Stronach",
+	"Machine":"E2"
+	},
+	{"AffectedRegions":
+		[
+			{"Location":"R6","dose":50,"type":"ribs"}
+		],
+	"Fractions":5,
+	"TreatmentDate":"\/Date(1326243320000)\/",
+	"TreatmentFacility":"UHN",
+	"Machine":"E1"
+	}
+]
+}

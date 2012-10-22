@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\Users\mike\Documents\Visual Studio 2010\BoneMetsSite" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="BoneMets/Grid" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="True" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/BoneMetsWCFService.dll" publishTime="10/21/2012 10:51:11" />
+    <file relUrl="BoneMetsService.svc" publishTime="10/20/2012 15:23:54" />
+    <file relUrl="Web.config" publishTime="10/21/2012 10:53:54" />
+    <file relUrl="bin/BoneMetsWCFService.pdb" publishTime="10/21/2012 10:51:11" />
+    <file relUrl="bin/BoneMetsLibrary.pdb" publishTime="10/21/2012 10:05:53" />
+    <file relUrl="bin/BoneMetsLibrary.dll" publishTime="10/21/2012 10:05:53" />
+  </publishProfile>
+</publishData>

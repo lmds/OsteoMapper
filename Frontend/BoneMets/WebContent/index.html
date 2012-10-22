@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>OsteoMapper</title>
+<script type="text/javascript" src="js/jquery-1.8.2.js" ></script>
+<script type="text/javascript" src="js/jquery.imagemapster.js"></script>
+<script type="text/javascript" src="js/jquery.lightbox_me.js"></script>
+<link type="stylesheet" href="css/bonemets.css"></link>
+
+<style type="text/css">
+.error {
+	color: red;
+}
+body{
+	font-family: Arial;
+}
+.accent {
+	z-index: 2;
+	position: relative;
+	left: 80%;
+	right: 0px;
+	top: 0px;
+	
+}
+.banner{
+	background-image: url('img/bannerbg.jpg');
+	background-size: cover;
+	padding: 3px;
+	position: absolute;
+	left: 0px;
+	width: 100%;
+	z-index: 1;
+	top: 0px;
+}
+	
+.content {
+	position: absolute;
+	left: 0px;
+	top: 100px;
+	padding: 5px;
+}
+
+#details {
+	background-color: lightgrey;
+	padding: 10px;
+	border: 1px solid black;
+}
+
+#addForm {
+	background-color: #0F81D3;
+	padding: 10px;
+	border: 1px solid grey;
+}
+
+.popup {
+	z-index: 3;	
+	background-color: white;
+}
+
+.close {
+	float: right;
+	padding-right: 5px;
+}
+
+.clear {
+	clear: both;
+	}
+
+</style>
+</head>
+<body>
+<div class="banner">
+<img src="img/osteomapper.png" />
+</div>
+<div class="accent">
+	<img src="img/bg.jpg" width="173px" height="213px"/>
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+var dataTypes = '';
+var dataTypesMap = {};
+var locations = '';
+var locationsMap = {};
+
+
+function highlight_locations(id){	
+	var options = {
+			mapKey: "data-key",
+			fillOpacity: 0,
+			render_select: {
+				fillColor: 'E4EB28',
+				fillOpacity: 0.2,
+				stroke: true
+			},
+	        render_highlight: {
+	            strokeWidth: 2,
+	            fillColor: 'ff0000',
+	            fillOpacity: 0.3,
+	            stroke: true
+	        },
+	        onClick: function(event){	        		        	
+	        		var entries = locationsMap[event.key];
+	        		$("#details").empty();	     
+	        		if(entries){
+		        		$.each(entries, function(index, field){	        			
+		        			$("#details").append("Date: " + new Date(parseInt(field.TreatmentDate.slice(6, -2))) + "<br/>");
+		        			$.each(field.AffectedRegions, function(index, region){
+		        				$("#details").append("Type: " + region.type + " ");	
+		        				$("#details").append("Location: " + region.Location + " ");
+		        				$("#details").append("Dose: " + region.dose + "Gy<br/>");
+		        			});
+		        		});
+	        		
+		        		$("#details").append('<a class="close" href="#">Close</a>');
+		        		$('#details').append('<a id="add" href="#">Enter new</a>');
+		        		$('#add').click(function(){
+		        			$('#addArea').val(event.key);
+		        			$('#addDate').val(new Date());
+		        			$('#addForm').lightbox_me({centered: true});
+		        		});
+		        		$("#details").lightbox_me({centered: true});
+	        		}else{
+	        			//show add new form
+	        			$('#addArea').val(event.key);
+	        			$('#addDate').val(new Date());
+	        			$('#addForm').lightbox_me({centered: true});
+	        		}
+		        	event.stopPropagation(); //halt deselect
+	        }	       
+	    };
+	$(id).mapster(options);
+	$(id).mapster('set', true, locations);
+}
+
+var onSuccess = function(data){
+	console.log(data);
+	dataTypes = '';
+	dataTypesMap = {};
+	locations = '';
+	locationsMap = {};
+	$("#patients").empty();
+	$("#patients").append("<hr/>");
+	if(data.MRN == null){
+		$("#patients").append("No matching patient found.");
+		return;
+	}
+	var patientsDiv = $("#patients").append(data.Firstname + " " + data.Lastname + "<br/>");
+	$.each(data.Fields, function(index, field){
+		
+		$("#patients").append("Date: " + new Date(parseInt(field.TreatmentDate.slice(6, -2))) + "<br/>");
+		$.each(field.AffectedRegions, function(index, region){
+			$("#patients").append("Type: " + region.type + " ");
+			dataTypes += region.type + ',';			
+			dataTypesMap[region.type] = (dataTypesMap[region.type] || 0);
+			dataTypesMap[region.type] += 1;
+			$("#patients").append("Location: " + region.Location + " ");
+			locations += region.Location +',';
+			locationsMap[region.Location] = (locationsMap[region.Location] || []);
+			locationsMap[region.Location].push(field);
+			$("#patients").append("Dose: " + region.dose + "Gy<br/>");
+		});
+	});
+	
+	
+
+	
+	$("#skeletonImageMap").css('display', 'block');
+	var options = {
+			mapKey: "data-key",
+			fillOpacity: 0,
+			render_select: {
+				fillColor: 'ff0000',
+				fillOpacity: 0.2,
+				stroke: true
+			},
+	        render_highlight: {
+	            strokeWidth: 2,
+	            fillColor: '0000ff',
+	            fillOpacity: 0.3,
+	            stroke: true
+	        },
+	        onClick: function(event){	        	
+	        	if(event.key == "spine"){
+	        		$('#spine').lightbox_me();
+	        		highlight_locations('#spine_image');
+	        	}else if (event.key == "ribs"){	        		
+	        		$('#ribs').lightbox_me();
+	        		highlight_locations('#ribs_image');
+	        	}else if (event.key == "shoulder"){
+	        		$('#shoulder').lightbox_me();
+	        	}else if (event.key =="pelvis"){
+	        		$('#pelvis').lightbox_me();
+	        	} else {
+	        		alert(event.key);
+	        	}
+	        	event.stopPropagation();
+	        }	       
+	    };
+	$("#skeleton").mapster(options);
+	//$("#skeleton").mapster('set', true, dataTypes);
+	$.each(dataTypesMap, function(key, index){
+		var selectedAreaOptions = {staticState: true, 
+				render_select:{fillOpacity: 0.3 * dataTypesMap[key]}};
+		var selector = 'area[data-key="'+key+'"]';
+		$(selector).mapster('set', true, selectedAreaOptions); //fixme: this does not select the area
+	});
+}
+
+var onError = function(response, textstatus, errorthrown){
+	console.log(response);
+	console.log(textstatus);
+	console.log(errorthrown);
+	$("#error").append(error.statusText);
+}
+
+function patientSearch(){
+	var mrn = $("#mrn").val();
+	var url = "/BoneMets/patients";
+	//var url = "http://winhacker:100/BoneMets/GetPatient";
+	var type = "json";
+	var data = { mrn: mrn };
+	
+	$.ajax({
+		  type: 'POST',
+		  url: url,
+		  data: data,
+		  success: onSuccess,
+		  error: onError,
+		  dataType: type
+		});
+}
+
+</script>
+
+<div class="content">
+
+<div id="error" class="error"></div>
+
+<form onSubmit="patientSearch()" action="#">
+	Enter a patient MRN: <input id="mrn" type="text" name="mrn"></input>
+	<button type="submit" >Go</button>
+</form>
+
+<div id="patients">
+
+</div>
+
+<table id="dataGrid"></table>
+
+<div id="skeletonImageMap" style="display:none">
+
+<img id="skeleton" src="img/Human_skeleton_BW_sm.png" width="246" height="500" alt="Overview" usemap="#skeleton_image_map" border="0">
+
+<map name="skeleton_image_map" id="skeleton_image_map">	
+	<area data-key="spine" shape="poly" href="#" coords=" 101,65, 124,68, 125,218, 99,218, 101,68"  alt="spine"/>
+	<area data-key="ribs" shape="poly" href="#" coords=" 130,97, 130,178, 145,189, 155,153, 134,100, 133,100"  alt="ribs"/>
+	<area data-key="ribs" shape="poly" href="#" coords=" 98,97, 98,164, 85,186, 72,166, 76,127, 96,96"  alt="ribs"/>
+	<area data-key="pelvis" shape="poly" href="#" coords=" 97,200, 70,199, 69,222, 92,254, 132,255, 155,219, 154,199, 129,199, 130,218, 99,223, 98,204"  alt="pelvis"/>
+	<area data-key="shoulder" shape="poly" href="#" coords=" 133,89, 158,139, 186,114, 163,92, 133,88"  alt="shoulder"/>
+	<area data-key="shoulder" shape="poly" href="#" coords=" 90,93, 70,121, 43,121, 57,93, 87,93"  alt="shoulder"/>
+	<area data-key="skull" shape="poly" href="#" coords=" 133,62, 89,60, 90,4, 138,8, 131,61"  alt="skull"/>
+</map>
+</div>
+
+</div>
+
+<div id="spine" style="display:none" class="popup">	
+	<div class="close"><a class="close" href="#">Close</a></div><div class="clear"></div>
+	<img id="spine_image" src="img/spine.jpg" width="624" height="1324" alt="spine" usemap="#spine_image_map" border="0">
+
+	<map name="spine_image_map" id="spine_image_map">	
+		<area data-key="C1" shape="poly" href="#" coords=" 120,99, 286,109, 280,164, 120,160, 122,103"  alt="C1"/>
+		<area data-key="T1" shape="poly" href="#" coords=" 126,439, 267,442, 271,481, 138,480, 125,442"  alt="T1"/>
+	</map>
+</div>
+<div id="ribs" style="display:none" class="popup">
+	<div class="close"><a class="close" href="#">Close</a></div><div class="clear"></div>
+	<img alt="" id="ribs_image" src="img/ribs.jpg" width="1129" height="563" usemap="#ribs_image_map" border="0">
+
+	<map name="ribs_image_map" id="ribs_image_map">	
+		<area data-key="R1" shape="poly" coords=" 538,58, 542,96, 734,91, 722,59, 535,58" href="#"/>
+		<area data-key="R6" shape="poly" coords=" 901,260, 902,293, 534,295, 535,265, 901,259" href="#"/>
+	</map>
+</div>
+<div id="shoulder" style="display:none" class="popup">
+	<div class="close"><a class="close" href="#">Close</a></div><div class="clear"></div>
+	<img alt="" src="img/shoulder.jpg" width="875px" height="103px">
+</div>
+<div id="pelvis" style="display:none" class="popup">
+	<div class="close"><a class="close" href="#">Close</a></div><div class="clear"></div>
+	<img alt="" src="img/pelvis.jpg" width="875px" height="139px">
+</div>
+<div id="details" style="display:none">
+
+</div>
+
+<div id="addForm" style="display:none">
+<form action="#" onSubmit="addData">
+<table>
+<tr><td>Date: </td><td><input name="date" id="addDate" value=""/></td></tr>
+<tr><td>Area: </td><td><input name="area" id="addArea" value=""/></td></tr>
+<tr><td>Dose: </td><td><input name="dose" value=""/></td></tr>
+<tr><td>Fraction: </td><td><input name="fraction" value="" /></td></tr>
+<tr><td></td><td>
+<button type="button" class="close">Cancel</button>
+<button type="submit" class="close">Add</button>
+</td></tr>
+</table>
+
+
+
+
+
+</form>
+</div>
+
+</body>
+</html>

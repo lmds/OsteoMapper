@@ -1,0 +1,7 @@
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\bin\BoneMetsWCFService.dll
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\bin\BoneMetsWCFService.pdb
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\obj\Debug\ResolveAssemblyReference.cache
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\obj\Debug\BoneMetsWCFService.dll
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\obj\Debug\BoneMetsWCFService.pdb
+C:\Users\mike\Documents\Visual Studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\bin\BoneMetsLibrary.dll
+C:\Users\mike\Documents\Visual Studio 2010\Projects\BoneMetsWCFService\BoneMetsWCFService\bin\BoneMetsLibrary.pdb

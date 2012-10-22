@@ -1,0 +1,5 @@
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsLibrary\BoneMetsLibrary\obj\Debug\ResolveAssemblyReference.cache
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsLibrary\BoneMetsLibrary\bin\Debug\BoneMetsLibrary.dll
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsLibrary\BoneMetsLibrary\bin\Debug\BoneMetsLibrary.pdb
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsLibrary\BoneMetsLibrary\obj\Debug\BoneMetsLibrary.dll
+c:\users\mike\documents\visual studio 2010\Projects\BoneMetsLibrary\BoneMetsLibrary\obj\Debug\BoneMetsLibrary.pdb
