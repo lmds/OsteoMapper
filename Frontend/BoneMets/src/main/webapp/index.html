@@ -76,7 +76,6 @@ function highlight_locations(id){
 }
 
 var onSuccess = function(data){    
-    //alert('success');
 	//console.log(data);
 	dataTypes = '';
 	dataTypesMap = {};
@@ -106,10 +105,7 @@ var onSuccess = function(data){
 		});
 	});
 	
-	//alert('pre image map');
-
-	
-	$("#skeletonImageMap").css('display', 'block');
+	$("#skeletonImageMap").show();
 	var options = {
 			mapKey: "data-key",
 			fillOpacity: 0,
@@ -149,7 +145,6 @@ var onSuccess = function(data){
 		var selector = 'area[data-key="'+key+'"]';
 		$(selector).mapster('set', true, selectedAreaOptions); //fixme: this does not select the area
 	});
-	//   alert('end');
 }
 
 var onError = function(response, textstatus, errorthrown){
@@ -183,10 +178,10 @@ function patientSearch(){
 
 <div id="error" class="error"></div>
 
-<form onSubmit="patientSearch()" action="#">
-	Enter a patient MRN: <input id="mrn" type="text" name="mrn"></input>
-	<button type="submit" >Go</button>
-</form>
+
+Enter a patient MRN: <input id="mrn" type="text" name="mrn" onkeydown="if (event.keyCode == 13) $('#patientSearchButton').click();"></input>
+<button id="patientSearchButton" type="submit" onClick="patientSearch()" >Go</button>
+
 
 <div id="patients">
 
