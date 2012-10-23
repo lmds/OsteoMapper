@@ -59,6 +59,7 @@ function highlight_locations(id){
 		        				$("#details").append("Type: " + region.type + " ");	
 		        				$("#details").append("Location: " + region.Location + " ");
 		        				$("#details").append("Dose: " + region.dose + "Gy<br/>");
+		        				$("#details").append("Fractions: " + field.Fractions + "<br/>");
 		        			});
 		        		});
 	        		
@@ -106,7 +107,8 @@ var onSuccess = function(data){
 			locations += region.Location +',';
 			locationsMap[region.Location] = (locationsMap[region.Location] || []);
 			locationsMap[region.Location].push(field);
-			$("#patients").append("Dose: " + region.dose + "Gy<br/>");
+			$("#patients").append("Dose: " + region.dose + "Gy ");
+			$("#patients").append("Fractions: " + field.Fractions + "<br/>");
 		});
 	});
 	
