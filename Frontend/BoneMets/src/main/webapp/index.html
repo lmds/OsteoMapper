@@ -25,6 +25,14 @@ var dataTypesMap = {};
 var locations = '';
 var locationsMap = {};
 
+function showAddForm(event){
+    //show add new form
+      $('#addArea').val(event.key);
+      $('#addDate').val(new Date());
+      $('#addDose').val('');
+      $('#addFraction').val('');
+      $('#addForm').lightbox_me({centered: true});
+}
 
 function highlight_locations(id){	
 	var options = {
@@ -57,16 +65,11 @@ function highlight_locations(id){
 		        		$("#details").append('<a class="close" href="#">Close</a>');
 		        		$('#details').append('<a id="add" href="#">Enter new</a>');
 		        		$('#add').click(function(){
-		        			$('#addArea').val(event.key);
-		        			$('#addDate').val(new Date());
-		        			$('#addForm').lightbox_me({centered: true});
+		        			showAddForm(event);
 		        		});
 		        		$("#details").lightbox_me({centered: true});
 	        		}else{
-	        			//show add new form
-	        			$('#addArea').val(event.key);
-	        			$('#addDate').val(new Date());
-	        			$('#addForm').lightbox_me({centered: true});
+	        		    showAddForm(event);
 	        		}
 		        	event.stopPropagation(); //halt deselect
 	        }	       
@@ -74,6 +77,8 @@ function highlight_locations(id){
 	$(id).mapster(options);
 	$(id).mapster('set', true, locations);
 }
+
+
 
 var onSuccess = function(data){    
 	//console.log(data);
@@ -241,8 +246,8 @@ Enter a patient MRN: <input id="mrn" type="text" name="mrn" onkeydown="if (event
 <table>
 <tr><td>Date: </td><td><input name="date" id="addDate" value=""/></td></tr>
 <tr><td>Area: </td><td><input name="area" id="addArea" value=""/></td></tr>
-<tr><td>Dose: </td><td><input name="dose" value=""/></td></tr>
-<tr><td>Fraction: </td><td><input name="fraction" value="" /></td></tr>
+<tr><td>Dose: </td><td><input name="dose" id="addDose" value=""/></td></tr>
+<tr><td>Fraction: </td><td><input name="fraction" id="addFraction" value="" /></td></tr>
 <tr><td></td><td>
 <button type="button" class="close">Cancel</button>
 <button type="submit" class="close">Add</button>
